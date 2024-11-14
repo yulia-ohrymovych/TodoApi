@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.ApplicationInsights;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.AddSqlite<TodoDbContext>(connectionString);
 
 // State that represents the current user from the database *and* the request
 builder.Services.AddCurrentUser();
+
+builder.Services.AddApplicationInsightsTelemetry();
 
 // Configure Open API
 builder.Services.AddEndpointsApiExplorer();
@@ -42,7 +45,7 @@ var app = builder.Build();
 app.UseHttpLogging();
 app.UseRateLimiter();
 
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
